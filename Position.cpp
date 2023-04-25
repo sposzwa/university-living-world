@@ -37,6 +37,11 @@ std::string Position::toString()
 	return "(" + std::to_string(getX()) + ", " + std::to_string(getY()) + ")";
 }
 
+bool operator ==(const Position &pos1, const Position &pos2)
+{
+	return pos1.x == pos2.x && pos1.y == pos2.y;
+}
+
 double Position::distance(Position position)
 {
 	double dx = (double)this->getX() - (double)position.getX();

@@ -19,6 +19,7 @@ public:
 
 	// Basic object functionality
 	std::string toString();
+	friend bool operator ==(const Position &pos1, const Position &pos2);
 
 	// Position specific methods
 	double distance(Position position);
