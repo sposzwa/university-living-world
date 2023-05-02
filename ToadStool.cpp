@@ -1,5 +1,4 @@
 #include "headers/ToadStool.h"
-#include "headers/World.h"
 
 ToadStool::ToadStool() 
 : Plant::Plant() {};

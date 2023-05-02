@@ -1,5 +1,4 @@
 #include "headers/Dandelion.h"
-#include "headers/World.h"
 
 Dandelion::Dandelion() 
 : Plant::Plant() {};

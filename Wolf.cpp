@@ -1,5 +1,4 @@
 #include "headers/Wolf.h"
-#include "headers/World.h"
 
 Wolf::Wolf() 
 : Animal::Animal() {};

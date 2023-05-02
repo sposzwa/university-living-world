@@ -1,5 +1,4 @@
 #include "headers/Sheep.h"
-#include "headers/World.h"
 
 Sheep::Sheep() 
 : Animal::Animal() {};

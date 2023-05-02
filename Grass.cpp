@@ -1,5 +1,4 @@
 #include "headers/Grass.h"
-#include "headers/World.h"
 
 Grass::Grass() 
 : Plant::Plant() {};
