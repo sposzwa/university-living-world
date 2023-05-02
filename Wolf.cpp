@@ -1,7 +1,7 @@
 #include "headers/Wolf.h"
 
 Wolf::Wolf() 
-: Animal::Animal() {};
+: Animal::Animal(8, 5, 20, 16, "W") {};
 
 Wolf::Wolf(Position pos) 
 : Animal::Animal(pos, 8, 5, 20, 16, "W") {};

@@ -1,7 +1,7 @@
 #include "headers/Grass.h"
 
 Grass::Grass() 
-: Plant::Plant() {};
+: Plant::Plant(0, 0, 6, 3, "G") {};
 
 Grass::Grass(Position pos) 
 : Plant::Plant(pos, 0, 0, 6, 3, "G") {};

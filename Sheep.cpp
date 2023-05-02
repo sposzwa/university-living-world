@@ -1,7 +1,7 @@
 #include "headers/Sheep.h"
 
 Sheep::Sheep() 
-: Animal::Animal() {};
+: Animal::Animal(3, 3, 10, 6, "S") {};
 
 Sheep::Sheep(Position pos) 
 : Animal::Animal(pos, 3, 3, 10, 6, "S") {};

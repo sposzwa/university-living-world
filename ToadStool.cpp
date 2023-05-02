@@ -1,7 +1,7 @@
 #include "headers/ToadStool.h"
 
 ToadStool::ToadStool() 
-: Plant::Plant() {};
+: Plant::Plant(0, 0, 12, 4, "T") {};
 
 ToadStool::ToadStool(Position pos) 
 : Plant::Plant(pos, 0, 0, 12, 4, "T") {};

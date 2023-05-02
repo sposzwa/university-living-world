@@ -1,7 +1,7 @@
 #include "headers/Dandelion.h"
 
 Dandelion::Dandelion() 
-: Plant::Plant() {};
+: Plant::Plant(0, 0, 6, 2, "D") {};
 
 Dandelion::Dandelion(Position pos) 
 : Plant::Plant(pos, 0, 0, 6, 2, "D") {};
