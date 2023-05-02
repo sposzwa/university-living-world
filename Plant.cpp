@@ -15,7 +15,7 @@ Plant::Plant(Plant const& plant)
 };
 
 Plant::~Plant(){
-	std::cout<<"Destructing Plant object!";
+	std::cout<<"Destructing Plant object!"<<std::endl;
 }
 
 void Plant::reproduce(Organism* otherParent = nullptr)
