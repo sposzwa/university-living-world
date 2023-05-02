@@ -41,7 +41,7 @@ class Organism : public IObserver, public ISubject, public ISerializer{
 		virtual ~Organism();
 		
 		// Overloading assignment operator
-		virtual void operator=(const Organism& organism);
+		virtual void operator=(Organism const& organism);
 		
 		// Basic object functionality
 		std::string toString();
