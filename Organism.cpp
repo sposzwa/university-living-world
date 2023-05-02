@@ -204,7 +204,6 @@ void Organism::serialize(std::fstream& out)
 
 void Organism::deserialize(std::fstream& in)
 {
-	std::cout<<"DESERIALIZING"<<std::endl;
 	int result, x, y;
 	in.read((char*) &result, sizeof(int));
 	x = (int) result;
