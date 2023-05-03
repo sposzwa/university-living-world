@@ -11,8 +11,9 @@ private:
 	int worldX;
 	int worldY;
 	int turn = 0;
-	const char separator = '.';
+	const char separator = '_';
 	std::vector<Organism*> organisms;
+	std::vector<Organism*> queuedToAdd;
 	bool isPositionOnWorld(Position pos);
 
 public:
@@ -43,6 +44,9 @@ public:
 	Organism* getOrganismFromPosition(Position pos);
 	void makeTurn();
 	void run();
+	void queue(Organism* org) {
+		queuedToAdd.push_back(org);
+	}
 
 	// Serializer interface methods
 	virtual void serialize(std::fstream& out) override;

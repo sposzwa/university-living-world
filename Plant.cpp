@@ -23,17 +23,22 @@ void Plant::reproduce(Organism* otherParent = nullptr)
 	auto optPos = getPositionForReproduction();
 	if(optPos){
 		power /= 2;
-		auto offspring = createOffspring(optPos.value());
-		// Add offspring to the descendants list
+		Organism* offspring = createOffspring(optPos.value());
+		
+		// Managing offsprings and ancestors
 		Attach(offspring);
-		// Add ancestors info to the offspring
+		for (auto& ancestor : ancestors) {
+			if (ancestor.subject != nullptr) {
+				ancestor.subject->Attach(offspring);
+			} 
+		} 
 		auto ancestorsCopy = ancestors;
-		Ancestor anc{turnOfBirth, -1, this};
+		Ancestor anc{ turnOfBirth, -1, this };
 		ancestorsCopy.push_back(anc);
 		offspring->setAncestors(ancestorsCopy);
-		// Add offspring to the world
-		descendants.push_back(offspring);
-		world->addOrganism(offspring);
+		
+		// Adding organism to the world queue
+		world->queue(offspring);
 	}	
 }
 

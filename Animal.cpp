@@ -49,18 +49,22 @@ void Animal::reproduce(Organism* otherParent)
 		power /= 2;
 		otherParent->setPower(otherParent->getPower() / 2);
 		auto offspring = createOffspring(optPos.value());
-		// Adding offspring to descendants
-		this->Attach(offspring);
-		otherParent->Attach(offspring);
-		// Adding to offspring information about its ancestors
-		auto ancestorsCopy = ancestors;
-		Ancestor anc_1{turnOfBirth, -1, this};
-		ancestorsCopy.push_back(anc_1);
-		Ancestor anc_2{otherParent->getTurnOfBirth(), -1, otherParent};
-		ancestorsCopy.push_back(anc_2);
-		offspring->setAncestors(ancestorsCopy);
-		// Adding Organism to the world
-		world->addOrganism(offspring);
+
+		// Managing offsprings and ancestors
+		Ancestor anc_1{ turnOfBirth, -1, this };
+		Ancestor anc_2{ otherParent->getTurnOfBirth(), -1, otherParent };
+		auto copyAncestors = ancestors, otherAncestors = otherParent->getAncestors();
+		copyAncestors.insert(copyAncestors.end(), otherAncestors.begin(), otherAncestors.end());
+		copyAncestors.push_back(anc_1);
+		copyAncestors.push_back(anc_2);
+		for (auto& ancestor : ancestors) {
+			if (ancestor.subject != nullptr) {
+				ancestor.subject->Attach(this);
+			}
+		}
+
+		// Adding organism to the world queue
+		world->queue(offspring);
 	}
 }
 
@@ -102,5 +106,5 @@ void Animal::deserialize(std::fstream& in)
 	x = (int) result;
 	in.read((char*) &result, sizeof(int));
 	y = (int) result;
-	this -> position = Position(x, y);
+	lastPosition = Position(x, y);
 }

@@ -15,7 +15,7 @@ Organism::~Organism()
 	if(world!=nullptr){
 		Notify();
 		world->removeOrganism(this);
-	}		
+	}
 };
 
 void Organism::operator=(const Organism& organism)
@@ -164,24 +164,27 @@ void Organism::Attach(IObserver* observer)
 
 void Organism::Detach(IObserver* observer)
 {
-	std::vector<IObserver*>::iterator index = std::find(descendants.begin(), descendants.end(), observer);
-	if(index!=descendants.end()) descendants.erase(index);
+	descendants.erase(std::remove(descendants.begin(), descendants.end(), observer), descendants.end());
 }
 
 void Organism::Notify()
 {
-	for(auto obs : descendants) obs->Update(this);
+	for (auto& descendant : descendants) {
+		descendant->Update(this);
+	}
+
+	for (auto& ancestor : ancestors) {
+		if (ancestor.subject != nullptr) ancestor.subject->Detach(this);
+	}
 }
 
 void Organism::Update(ISubject* subject)
-{
-	if(dynamic_cast<Organism*>(subject) != nullptr){
-		for(Ancestor anc : ancestors)
-			if(anc.subject == subject){
-				anc.deathTurn = world->getTurn();
-				anc.subject = nullptr;
-				break;
-			}
+{ 
+	for (auto& ancestor : ancestors) {
+		if (ancestor.subject == subject) {
+			ancestor.deathTurn = dynamic_cast<Organism*>(ancestor.subject)->getWorld()->getTurn();
+			ancestor.subject = nullptr;
+		}
 	}
 }
 

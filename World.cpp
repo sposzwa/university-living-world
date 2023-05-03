@@ -93,7 +93,7 @@ void World::setWorldY(int worldY)
 
 int World::getTurn()
 {
-	return turn;
+	return this->turn;
 }
 
 std::vector<Organism*> World::getOrganisms()
@@ -110,7 +110,6 @@ void World::addOrganism(Organism* organism)
 {
 	if(isPositionFree(organism->getPosition()) && isPositionOnWorld(organism->getPosition()) && organism->getWorld() == nullptr)
 	{
-		organism->setTurnOfBirth(turn);
 		organism->setWorld(this);
 		if(organism->getTurnOfBirth() < 0) organism->setTurnOfBirth(turn);
 		size_t orgSize = organisms.size();
@@ -135,9 +134,11 @@ void World::removeOrganism(Organism* organism)
 		organism->Notify();
 		organism->setWorld(nullptr);
 		organism->setTurnOfBirth(-1);
+
 		// Clearing descendats list
 		std::vector<IObserver*> des;
 		organism->setDescendants(des);
+
 		// Clearing ancestors list
 		std::vector<Ancestor> anc;
 		organism->setAncestors(anc);
@@ -178,15 +179,19 @@ void World::makeTurn()
 	size_t initialSize = organisms.size();
 	for (size_t i = 0; i<initialSize; i++){
 		organisms.at(i)->action();
-		if(initialSize > organisms.size()) initialSize = organisms.size();
+		if (initialSize > organisms.size()) {
+			initialSize = organisms.size();
+			i--;
+		}
 	}
+	for (auto org : queuedToAdd) addOrganism(org);
+	queuedToAdd.clear();
 	turn++;
 }
 
 void World::run()
 {
 	int i = 0;
-	srand(time(0));
 	do{
 		system("cls");
 		makeTurn();
@@ -229,14 +234,14 @@ void World::deserialize(std::fstream& in)
 		std::string sign;
 		sign.resize(strSize);
 		in.read((char*) sign.data(), strSize);
-		Organism* organism;
+		Organism* organism = nullptr;
 		if(sign == "W") organism = new Wolf();
 		if(sign == "S") organism = new Sheep();
 		if(sign == "D") organism = new Dandelion();
 		if(sign == "T") organism = new ToadStool();
 		if(sign == "G") organism = new Grass();
 		organism->deserialize(in);
-		addOrganism(organism);
+		if(organism != nullptr) addOrganism(organism);
 	}
 }
 
