@@ -1,13 +1,13 @@
 #pragma once
-#include "Animal.h"
+#include "Animal.hpp"
 
-class Sheep : public Animal{
+class Wolf : public Animal{
 public: 
     // Constructors & Destructors
-    Sheep();
-    Sheep(Position pos);
-    Sheep(Sheep const& sheep);
-    ~Sheep();
+    Wolf();
+    Wolf(Position pos);
+    Wolf(Wolf const& wolf);
+    ~Wolf();
 
     // Overriden organism methods
     Organism* createOffspring(Position pos) override;

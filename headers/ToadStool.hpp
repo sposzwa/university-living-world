@@ -1,5 +1,5 @@
 #pragma once
-#include "Plant.h"
+#include "Plant.hpp"
 
 class ToadStool : public Plant {
     public: 

@@ -1,4 +1,4 @@
-#include "headers/Dandelion.h"
+#include "headers/Dandelion.hpp"
 
 Dandelion::Dandelion() 
 : Plant::Plant(0, 0, 6, 2, "D") {};

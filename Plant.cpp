@@ -1,4 +1,4 @@
-#include "headers/Plant.h"
+#include "headers/Plant.hpp"
 
 Plant::Plant()
 : Organism() {};

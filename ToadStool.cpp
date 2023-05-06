@@ -1,4 +1,4 @@
-#include "headers/ToadStool.h"
+#include "headers/ToadStool.hpp"
 
 ToadStool::ToadStool() 
 : Plant::Plant(0, 0, 12, 4, "T") {};

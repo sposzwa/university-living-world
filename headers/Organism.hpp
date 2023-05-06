@@ -5,10 +5,10 @@
 #include <iostream>
 #include <algorithm>
 #include <optional>
-#include "Position.h"
-#include "IObserver.h"
-#include "ISubject.h"
-#include "ISerializer.h"
+#include "Position.hpp"
+#include "IObserver.hpp"
+#include "ISubject.hpp"
+#include "ISerializer.hpp"
 
 // Ancestor data structure
 struct Ancestor{

@@ -1,4 +1,4 @@
-#include "headers/Grass.h"
+#include "headers/Grass.hpp"
 
 Grass::Grass() 
 : Plant::Plant(0, 0, 6, 3, "G") {};

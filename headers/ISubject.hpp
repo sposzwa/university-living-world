@@ -1,5 +1,5 @@
 #pragma once
-#include "./IObserver.h"
+#include "./IObserver.hpp"
 
 class ISubject{
 public:

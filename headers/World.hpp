@@ -2,8 +2,8 @@
 #include <vector>
 #include <ctime>
 #include <iostream>
-#include "Organism.h"
-#include "ISerializer.h"
+#include "Organism.hpp"
+#include "ISerializer.hpp"
 
 class World : public ISerializer
 {

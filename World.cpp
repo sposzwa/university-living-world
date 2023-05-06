@@ -1,8 +1,8 @@
 #include <fstream>
 #include <algorithm>
-#include "headers/World.h"
-#include "headers/Position.h"
-#include "headers/Organisms.h"
+#include "headers/World.hpp"
+#include "headers/Position.hpp"
+#include "headers/Organisms.hpp"
 
 
 World::World()

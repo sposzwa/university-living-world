@@ -1,4 +1,4 @@
-#include "headers/Sheep.h"
+#include "headers/Sheep.hpp"
 
 Sheep::Sheep() 
 : Animal::Animal(3, 3, 10, 6, "S") {};

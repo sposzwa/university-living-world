@@ -1,4 +1,4 @@
-#include "headers/Wolf.h"
+#include "headers/Wolf.hpp"
 
 Wolf::Wolf() 
 : Animal::Animal(8, 5, 20, 16, "W") {};

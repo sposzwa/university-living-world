@@ -1,5 +1,5 @@
-#include "headers/Organism.h"
-#include "headers/World.h"
+#include "headers/Organism.hpp"
+#include "headers/World.hpp"
 
 Organism::Organism() {};
 

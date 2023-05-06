@@ -1,7 +1,7 @@
 #include <iostream>
-#include "headers/Position.h"
-#include "headers/World.h"
-#include "headers/Organisms.h"
+#include "headers/Position.hpp"
+#include "headers/World.hpp"
+#include "headers/Organisms.hpp"
 
 int main()
 {

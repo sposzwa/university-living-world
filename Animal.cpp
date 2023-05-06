@@ -1,4 +1,4 @@
-#include "headers/Animal.h"
+#include "headers/Animal.hpp"
 
 Animal::Animal()
 : Organism() {};

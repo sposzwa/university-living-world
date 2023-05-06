@@ -1,5 +1,5 @@
 #include <math.h>
-#include "headers/Position.h"
+#include "headers/Position.hpp"
 
 Position::Position() {};
 
