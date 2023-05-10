@@ -7,9 +7,7 @@ Sheep::Sheep(Position pos)
 : Animal::Animal(pos, 3, 3, 10, 6, "S") {};
 
 Sheep::Sheep(Sheep const& sheep)
-: Animal(sheep) {
-    std::cout<<"Copying Sheep object!"<<std::endl;
-};
+: Animal(sheep) {};
 
 Sheep::~Sheep() {};
 

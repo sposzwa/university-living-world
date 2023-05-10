@@ -1,7 +1,7 @@
 #pragma once
 
 class ISubject;
-class IObserver{
+class IObserver {
 private:
 	friend class boost::serialization::access;
 	template<class Archive>

@@ -10,21 +10,15 @@ Plant::Plant(Position pos, int power, int initiative, int liveLength, int powerT
 : Organism(pos, power, initiative, liveLength, powerToReproduce, sign) {};
 
 Plant::Plant(Plant const& plant)
-: Organism(plant) {
-	std::cout<<"Copying Plant object!"<<std::endl;
-};
+: Organism(plant) {};
 
-Plant::~Plant(){
-	std::cout<<"Destructing Plant object!"<<std::endl;
-}
+Plant::~Plant() {};
 
-void Plant::reproduce(Organism* otherParent = nullptr)
-{
+void Plant::reproduce(Organism* otherParent = nullptr){
 	auto optPos = getPositionForReproduction();
 	if(optPos){
 		power /= 2;
 		Organism* offspring = createOffspring(optPos.value());
-		
 		// Managing offsprings and ancestors
 		Attach(offspring);
 		for (auto& ancestor : ancestors) {
@@ -32,18 +26,15 @@ void Plant::reproduce(Organism* otherParent = nullptr)
 				ancestor.subject->Attach(offspring);
 			} 
 		} 
-		auto ancestorsCopy = ancestors;
+		std::vector<Ancestor> ancestorsCopy = ancestors;
 		Ancestor anc{ turnOfBirth, -1, this };
 		ancestorsCopy.push_back(anc);
 		offspring->setAncestors(ancestorsCopy);
-		
-		// Adding organism to the world queue
 		world->queue(offspring);
 	}	
 }
 
-void Plant::action()
-{
+void Plant::action(){
 	if(liveLength <= 0) delete this;
 	else{
 		liveLength--;
@@ -54,8 +45,7 @@ void Plant::action()
 
 void Plant::move(Position pos) {}
 
-void Plant::interact(Organism* initator)
-{
+void Plant::interact(Organism* initator){
 	initator->move(position);
 	delete this;
 }

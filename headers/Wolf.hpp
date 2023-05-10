@@ -4,22 +4,17 @@
 #include <boost/serialization/base_object.hpp>
 #include "Animal.hpp"
 
-class Wolf : public Animal{
+class Wolf : public Animal {
 protected:
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive& ar, const unsigned int version)
-    {
+    void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<Animal>(*this);
     }
-
 public: 
-    // Constructors & Destructors
     Wolf();
     Wolf(Position pos);
     Wolf(Wolf const& wolf);
     ~Wolf();
-
-    // Overriden organism methods
     Organism* createOffspring(Position pos) override;
 };

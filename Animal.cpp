@@ -14,15 +14,15 @@ Animal::Animal(Animal const& animal)
 
 Animal::~Animal() {};
 
-Position Animal::getLastPosition(){
+Position Animal::getLastPosition() {
 	return lastPosition;
 }
 
-void Animal::setLastPosition(Position pos){
+void Animal::setLastPosition(Position pos) {
 	lastPosition = pos;
 }
 
-void Animal::action(){
+void Animal::action() {
 	if(!liveLength) delete this;
 	else{
 		liveLength--;
@@ -35,18 +35,16 @@ void Animal::action(){
 	}
 }
 
-void Animal::reproduce(Organism* otherParent)
-{
+void Animal::reproduce(Organism* otherParent) {
 	auto optPos = getPositionForReproduction();
 	if(optPos){
 		power /= 2;
 		otherParent->setPower(otherParent->getPower() / 2);
 		auto offspring = createOffspring(optPos.value());
-
 		// Managing offsprings and ancestors
 		Ancestor anc_1{ turnOfBirth, -1, this };
 		Ancestor anc_2{ otherParent->getTurnOfBirth(), -1, otherParent };
-		auto copyAncestors = ancestors, otherAncestors = otherParent->getAncestors();
+		std::vector<Ancestor> copyAncestors = ancestors, otherAncestors = otherParent->getAncestors();
 		copyAncestors.insert(copyAncestors.end(), otherAncestors.begin(), otherAncestors.end());
 		copyAncestors.push_back(anc_1);
 		copyAncestors.push_back(anc_2);
@@ -55,25 +53,19 @@ void Animal::reproduce(Organism* otherParent)
 				ancestor.subject->Attach(this);
 			}
 		}
-
-		// Adding organism to the world queue
 		world->queue(offspring);
 	}
 }
 
-void Animal::move(Position newPosition)
-{
+void Animal::move(Position newPosition) {
 	lastPosition = position;
 	position = newPosition;
 }
 
-void Animal::interact(Organism* initiator)
-{	
+void Animal::interact(Organism* initiator) {	
 	bool isSameSpecie = (*initiator).getSign() == sign ? true : false;
-	if(isSameSpecie && initiator->canReproduce() && canReproduce())
-	{
-		reproduce(initiator); 
-	}else if(!isSameSpecie){
+	if(isSameSpecie && initiator->canReproduce() && canReproduce()) reproduce(initiator);	
+	else if(!isSameSpecie){
 		if(initiator->getPower() >= power){
 			initiator->move(position);
 			delete this;

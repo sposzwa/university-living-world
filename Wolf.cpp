@@ -7,13 +7,9 @@ Wolf::Wolf(Position pos)
 : Animal::Animal(pos, 8, 5, 20, 16, "W") {};
 
 Wolf::Wolf(Wolf const& wolf)
-: Animal(wolf){
-    std::cout<<"Copying Wolf object!"<<std::endl;
-}
+: Animal(wolf) {};
 
-Wolf::~Wolf(){  
-    std::cout<<"Destructing Wolf object!"<<std::endl;  
-}
+Wolf::~Wolf() {};
 
 Organism* Wolf::createOffspring(Position pos){
     return new Wolf(pos);

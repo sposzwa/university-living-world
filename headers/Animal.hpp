@@ -5,37 +5,28 @@
 #include "Organism.hpp"
 #include "World.hpp"
 
-class Animal : public Organism
-{
+class Animal : public Organism {
 protected:
 	Position lastPosition;
 	friend class boost::serialization::access;
 	template<class Archive>
-	void serialize(Archive& ar, const unsigned int version)
-	{
+	void serialize(Archive& ar, const unsigned int version) {
 		ar& boost::serialization::base_object<Organism>(*this);
 		ar& lastPosition;
 	}
-
 public:
-	// Constructors & Destructor
 	Animal();
 	Animal(int power, int initiative, int liveLength, int powerToReproduce, std::string sign);
 	Animal(Position pos, int power, int initiative, int liveLength, int powerToReproduce, std::string sign);
 	Animal(Animal const& animal);
 	virtual ~Animal();
-
-	// Getters & Setters
 	Position getLastPosition();
 	void setLastPosition(Position pos);
-
-	// Overriden organism methods
 	virtual void action() override;
 	virtual void reproduce(Organism* otherParent) override;
 	virtual Organism* createOffspring(Position pos) = 0;
 	void move(Position pos) override;
 	virtual void interact(Organism* initiator) override;
-
 };
 
 

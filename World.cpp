@@ -6,20 +6,12 @@
 
 
 World::World()
-: worldX(6), worldY(6)
-{
-	std::cout<<"Creating world object."<<std::endl;
-}
+	: worldX(6), worldY(6) {};
 
 World::World(int x, int y)
-: worldX(x), worldY(y) 
-{
-	std::cout<<"Creating world object with parametrized constructor."<<std::endl;
-}
+	: worldX(x), worldY(y) {};
 
-World::~World()
-{
-	std::cout<<"Destroying world object and all Organisms living in it."<<std::endl;
+World::~World() {
 	size_t initialSize = organisms.size();
 	for(size_t i = 0; i<initialSize; i++){
 		organisms.at(i)->setWorld(nullptr);
@@ -27,8 +19,7 @@ World::~World()
 	}
 }
 
-std::string World::toString()
-{
+std::string World::toString(){
 	std::string result = "\nturn: " + std::to_string(getTurn()) + "\n";
 	std::string spec;
 
@@ -45,24 +36,21 @@ std::string World::toString()
 	return result;
 }
 
-std::string World::getOrganismSignFromPosition(int x, int y)
-{	
+std::string World::getOrganismSignFromPosition(int x, int y){	
 	for (Organism* org : organisms)
 		if (org->getPosition().getX() == x && org->getPosition().getY() == y)
 			return org->getSign();
 	return "";
 }
 
-Organism* World::getOrganismFromPosition(Position pos)
-{
+Organism* World::getOrganismFromPosition(Position pos){
 	for (Organism* org : organisms)
 		if (org->getPosition()==pos)
 			return org;
 	return nullptr;
 }
 
-bool World::isPositionOnWorld(Position pos)
-{
+bool World::isPositionOnWorld(Position pos){
 	int x = pos.getX(), y = pos.getY();
 	return (x >= 0 && y >= 0 && x < getWorldX() && y < getWorldY());
 }
@@ -71,45 +59,36 @@ bool World::isPositionFree(Position position) {
 	return getOrganismSignFromPosition(position.getX(), position.getY()).empty();
 }
 
-int World::getWorldX()
-{
+int World::getWorldX(){
 	return worldX;
 }
 
-void World::setWorldX(int worldX)
-{
+void World::setWorldX(int worldX){
 	this->worldX = worldX;
 }
 
-int World::getWorldY()
-{
+int World::getWorldY(){
 	return worldY;
 }
 
-void World::setWorldY(int worldY)
-{
+void World::setWorldY(int worldY){
 	this->worldY = worldY;
 }
 
-int World::getTurn()
-{
+int World::getTurn() {
 	return this->turn;
 }
 
-std::vector<Organism*> World::getOrganisms()
-{
+std::vector<Organism*> World::getOrganisms(){
 	return organisms;
 } 
 
-void World::setOrganisms(std::vector<Organism*> newOrganisms)
-{
+void World::setOrganisms(std::vector<Organism*> newOrganisms){
 	organisms = newOrganisms;
 }
 
-void World::addOrganism(Organism* organism)
-{
-	if(isPositionFree(organism->getPosition()) && isPositionOnWorld(organism->getPosition()) && organism->getWorld() == nullptr)
-	{
+void World::addOrganism(Organism* organism){
+	if(isPositionFree(organism->getPosition()) && isPositionOnWorld(organism->getPosition()) && organism->getWorld() == nullptr){
 		organism->setWorld(this);
 		if(organism->getTurnOfBirth() < 0) organism->setTurnOfBirth(turn);
 		size_t orgSize = organisms.size();
@@ -126,27 +105,19 @@ void World::addOrganism(Organism* organism)
 	}
 }
 
-void World::removeOrganism(Organism* organism)
-{
+void World::removeOrganism(Organism* organism){
 	std::vector<Organism*>::iterator index = std::find(organisms.begin(), organisms.end(), organism);
 	if(index!=organisms.end()){
  		organisms.erase(index);
 		organism->Notify();
 		organism->setWorld(nullptr);
 		organism->setTurnOfBirth(-1);
-
-		// Clearing descendats list
-		std::vector<IObserver*> des;
-		organism->setDescendants(des);
-
-		// Clearing ancestors list
-		std::vector<Ancestor> anc;
-		organism->setAncestors(anc);
+		organism->setDescendants(std::vector<IObserver*>());
+		organism->setAncestors(std::vector<Ancestor>());
 	}
 }
 
-std::vector<Position> World::getVectorOfValidMovePosition(Position position)
-{
+std::vector<Position> World::getVectorOfValidMovePosition(Position position){
 	int pos_x = position.getX(), pos_y = position.getY();
 	std::vector<Position> result;
 	for(int x = -1; x < 2; ++x)
@@ -158,8 +129,7 @@ std::vector<Position> World::getVectorOfValidMovePosition(Position position)
 	return result;
 }
 
-std::vector<Position> World::getVectorOfFreePositionsAround(Position position)
-{	
+std::vector<Position> World::getVectorOfFreePositionsAround(Position position){	
 	int pos_x = position.getX(), pos_y = position.getY();
 	std::vector<Position> result;
 	for(int x = -1; x < 2; ++x)
@@ -174,8 +144,7 @@ std::vector<Position> World::getVectorOfFreePositionsAround(Position position)
 	return result;
 }
 
-void World::makeTurn()
-{
+void World::makeTurn(){
 	size_t initialSize = organisms.size();
 	for (size_t i = 0; i<initialSize; i++){
 		organisms.at(i)->action();
@@ -189,8 +158,7 @@ void World::makeTurn()
 	turn++;
 }
 
-void World::run()
-{
+void World::run(){
 	int i = 0;
 	do{
 		system("cls");
@@ -201,12 +169,11 @@ void World::run()
 	}while(i < 20);
 }
 
-void World::queue(Organism* org) {
+void World::queue(Organism* org){
 	queuedToAdd.push_back(org);
 }
 
-void World::writeWorld(std::string fileName)
-{
+void World::writeWorld(std::string fileName){
 	std::ofstream ofs(fileName);
 	boost::archive::text_oarchive outArchive(ofs);
 	outArchive.register_type<Wolf>();
@@ -221,8 +188,7 @@ void World::writeWorld(std::string fileName)
 	outArchive << queuedToAdd;
 }
 
-void World::readWorld(std::string fileName)
-{
+void World::readWorld(std::string fileName){
 	std::ifstream ifs(fileName);
     boost::archive::text_iarchive inArchive(ifs);
 	inArchive.register_type<Wolf>();

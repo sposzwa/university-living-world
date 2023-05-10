@@ -1,7 +1,7 @@
 #pragma once
 #include "./IObserver.hpp"
 
-class ISubject{
+class ISubject {
 private:
     friend class boost::serialization::access;
     template<class Archive>

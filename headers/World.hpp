@@ -8,8 +8,7 @@
 #include <boost/serialization/vector.hpp>
 #include "Organism.hpp"
 
-class World
-{
+class World {
 private:
 	int worldX;
 	int worldY;
@@ -27,18 +26,11 @@ private:
 		ar& organisms;
 		ar& queuedToAdd;
 	};
-
 public:
-	// Constructors & Destructor
 	World();
 	World(int worldX, int worldY);
 	~World();
-
-
-	// Basic object functionality
 	std::string toString();
-
-	// Getters & Setters
 	int getWorldX();
 	void setWorldX(int worldX);
 	int getWorldY();
@@ -46,8 +38,6 @@ public:
 	int getTurn();
 	std::vector<Organism*> getOrganisms();
 	void setOrganisms(std::vector<Organism*> newOrganisms);
-
-	// World specific methods
 	void addOrganism(Organism *organism);
 	void removeOrganism(Organism* organism);
 	std::vector<Position> getVectorOfValidMovePosition(Position position);
@@ -58,8 +48,6 @@ public:
 	void makeTurn();
 	void run();
 	void queue(Organism* org);
-
-	// Saving & Loading methods
 	void writeWorld(std::string fileName);
 	void readWorld(std::string fileName);
 };

@@ -7,12 +7,10 @@ Grass::Grass(Position pos)
 : Plant::Plant(pos, 0, 0, 6, 3, "G") {};
 
 Grass::Grass(Grass const& grass)
-: Plant(grass) {
-    std::cout<<"Copying Plant object!"<<std::endl;
-};
+: Plant(grass) {};
 
 Grass::~Grass() {};
 
-Organism* Grass::createOffspring(Position pos){
+Organism* Grass::createOffspring(Position pos) {
     return new Grass(pos);
 };
