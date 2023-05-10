@@ -22,6 +22,7 @@ public:
 	void setY(int y);
 	std::string toString();
 	friend bool operator ==(const Position &pos1, const Position &pos2);
+	friend std::ostream& operator<< (std::ostream& stream, const Position& pos);
 	double distance(Position position);
 	void move(int dx, int dy);
 };
