@@ -2,7 +2,14 @@
 #include <algorithm>
 #include "headers/World.hpp"
 #include "headers/Position.hpp"
-#include "headers/Organisms.hpp"
+#include "headers/Organism.hpp"
+#include "headers/Plant.hpp"
+#include "headers/Animal.hpp"
+#include "headers/Wolf.hpp"
+#include "headers/Sheep.hpp"
+#include "headers/Grass.hpp"
+#include "headers/Dandelion.hpp"
+#include "headers/ToadStool.hpp"
 
 
 World::World()
