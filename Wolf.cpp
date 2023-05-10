@@ -11,6 +11,6 @@ Wolf::Wolf(Wolf const& wolf)
 
 Wolf::~Wolf() {};
 
-Organism* Wolf::createOffspring(Position pos){
+Organism* Wolf::createOffspring(Position pos) {
     return new Wolf(pos);
 }

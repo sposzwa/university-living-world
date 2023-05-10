@@ -14,7 +14,7 @@ Plant::Plant(Plant const& plant)
 
 Plant::~Plant() {};
 
-void Plant::reproduce(Organism* otherParent = nullptr){
+void Plant::reproduce(Organism* otherParent = nullptr) {
 	auto optPos = getPositionForReproduction();
 	if(optPos){
 		power /= 2;
@@ -34,7 +34,7 @@ void Plant::reproduce(Organism* otherParent = nullptr){
 	}	
 }
 
-void Plant::action(){
+void Plant::action() {
 	if(liveLength <= 0) delete this;
 	else{
 		liveLength--;
@@ -45,7 +45,7 @@ void Plant::action(){
 
 void Plant::move(Position pos) {}
 
-void Plant::interact(Organism* initator){
+void Plant::interact(Organism* initator) {
 	initator->move(position);
 	delete this;
 }

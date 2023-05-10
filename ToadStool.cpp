@@ -11,11 +11,11 @@ ToadStool::ToadStool(ToadStool const& toadStool)
 
 ToadStool::~ToadStool() {};
 
-void ToadStool::interact(Organism* initiator){
+void ToadStool::interact(Organism* initiator) {
     delete initiator;
     delete this;
 }
 
-Organism* ToadStool::createOffspring(Position pos){
+Organism* ToadStool::createOffspring(Position pos) {
     return new ToadStool(pos);
 }

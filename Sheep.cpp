@@ -11,6 +11,6 @@ Sheep::Sheep(Sheep const& sheep)
 
 Sheep::~Sheep() {};
 
-Organism* Sheep::createOffspring(Position pos){
+Organism* Sheep::createOffspring(Position pos) {
     return new Sheep(pos);
 }
