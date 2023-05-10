@@ -13,7 +13,7 @@ World::World(int x, int y)
 
 World::~World() {
 	size_t initialSize = organisms.size();
-	for(size_t i = 0; i<initialSize; i++){
+	for(size_t i = 0; i<initialSize; i++) {
 		organisms.at(i)->setWorld(nullptr);
 		delete organisms.at(i);
 	}
@@ -36,21 +36,21 @@ std::string World::toString(){
 	return result;
 }
 
-std::string World::getOrganismSignFromPosition(int x, int y){	
+std::string World::getOrganismSignFromPosition(int x, int y) {	
 	for (Organism* org : organisms)
 		if (org->getPosition().getX() == x && org->getPosition().getY() == y)
 			return org->getSign();
 	return "";
 }
 
-Organism* World::getOrganismFromPosition(Position pos){
+Organism* World::getOrganismFromPosition(Position pos) {
 	for (Organism* org : organisms)
 		if (org->getPosition()==pos)
 			return org;
 	return nullptr;
 }
 
-bool World::isPositionOnWorld(Position pos){
+bool World::isPositionOnWorld(Position pos) {
 	int x = pos.getX(), y = pos.getY();
 	return (x >= 0 && y >= 0 && x < getWorldX() && y < getWorldY());
 }
@@ -59,19 +59,19 @@ bool World::isPositionFree(Position position) {
 	return getOrganismSignFromPosition(position.getX(), position.getY()).empty();
 }
 
-int World::getWorldX(){
+int World::getWorldX() {
 	return worldX;
 }
 
-void World::setWorldX(int worldX){
+void World::setWorldX(int worldX) {
 	this->worldX = worldX;
 }
 
-int World::getWorldY(){
+int World::getWorldY() {
 	return worldY;
 }
 
-void World::setWorldY(int worldY){
+void World::setWorldY(int worldY) {
 	this->worldY = worldY;
 }
 
@@ -79,15 +79,15 @@ int World::getTurn() {
 	return this->turn;
 }
 
-std::vector<Organism*> World::getOrganisms(){
+std::vector<Organism*> World::getOrganisms() {
 	return organisms;
 } 
 
-void World::setOrganisms(std::vector<Organism*> newOrganisms){
+void World::setOrganisms(std::vector<Organism*> newOrganisms) {
 	organisms = newOrganisms;
 }
 
-void World::addOrganism(Organism* organism){
+void World::addOrganism(Organism* organism) {
 	if(isPositionFree(organism->getPosition()) && isPositionOnWorld(organism->getPosition()) && organism->getWorld() == nullptr){
 		organism->setWorld(this);
 		if(organism->getTurnOfBirth() < 0) organism->setTurnOfBirth(turn);
@@ -105,7 +105,7 @@ void World::addOrganism(Organism* organism){
 	}
 }
 
-void World::removeOrganism(Organism* organism){
+void World::removeOrganism(Organism* organism) {
 	std::vector<Organism*>::iterator index = std::find(organisms.begin(), organisms.end(), organism);
 	if(index!=organisms.end()){
  		organisms.erase(index);
@@ -117,7 +117,7 @@ void World::removeOrganism(Organism* organism){
 	}
 }
 
-std::vector<Position> World::getVectorOfValidMovePosition(Position position){
+std::vector<Position> World::getVectorOfValidMovePosition(Position position) {
 	int pos_x = position.getX(), pos_y = position.getY();
 	std::vector<Position> result;
 	for(int x = -1; x < 2; ++x)
@@ -129,7 +129,7 @@ std::vector<Position> World::getVectorOfValidMovePosition(Position position){
 	return result;
 }
 
-std::vector<Position> World::getVectorOfFreePositionsAround(Position position){	
+std::vector<Position> World::getVectorOfFreePositionsAround(Position position) {	
 	int pos_x = position.getX(), pos_y = position.getY();
 	std::vector<Position> result;
 	for(int x = -1; x < 2; ++x)
@@ -144,7 +144,7 @@ std::vector<Position> World::getVectorOfFreePositionsAround(Position position){
 	return result;
 }
 
-void World::makeTurn(){
+void World::makeTurn() {
 	size_t initialSize = organisms.size();
 	for (size_t i = 0; i<initialSize; i++){
 		organisms.at(i)->action();
@@ -158,7 +158,7 @@ void World::makeTurn(){
 	turn++;
 }
 
-void World::run(){
+void World::run() {
 	int i = 0;
 	do{
 		system("cls");
@@ -169,11 +169,11 @@ void World::run(){
 	}while(i < 20);
 }
 
-void World::queue(Organism* org){
+void World::queue(Organism* org) {
 	queuedToAdd.push_back(org);
 }
 
-void World::writeWorld(std::string fileName){
+void World::writeWorld(std::string fileName) {
 	std::ofstream ofs(fileName);
 	boost::archive::text_oarchive outArchive(ofs);
 	outArchive.register_type<Wolf>();
@@ -188,7 +188,7 @@ void World::writeWorld(std::string fileName){
 	outArchive << queuedToAdd;
 }
 
-void World::readWorld(std::string fileName){
+void World::readWorld(std::string fileName) {
 	std::ifstream ifs(fileName);
     boost::archive::text_iarchive inArchive(ifs);
 	inArchive.register_type<Wolf>();
