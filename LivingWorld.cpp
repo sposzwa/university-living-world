@@ -1,7 +1,14 @@
 #include <iostream>
 #include "headers/Position.hpp"
 #include "headers/World.hpp"
-#include "headers/Organisms.hpp"
+#include "headers/Organism.hpp"
+#include "headers/Plant.hpp"
+#include "headers/Animal.hpp"
+#include "headers/Wolf.hpp"
+#include "headers/Sheep.hpp"
+#include "headers/Grass.hpp"
+#include "headers/Dandelion.hpp"
+#include "headers/ToadStool.hpp"
 
 void DandelionCopyTest(Dandelion dan) {
 	std::cout<<dan.toString()<<std::endl;
@@ -12,7 +19,7 @@ void DandelionCopyTest(Dandelion dan) {
 int main()
 {
 	// Random generator initialization
-	srand(time(0));
+	srand((unsigned int)time(NULL));
 	World* world = new World(8, 8);
 
 	// Creating some organisms living in this worldd
@@ -23,11 +30,11 @@ int main()
 	world->addOrganism(new Dandelion(Position(4, 2)));
 
 	// Printing out world at the begining
-	std::cout << "BEGINNING OF WORLD" << std::endl;
+	std::cout << "BEGINNING OF WORLD";
 	std::cout<<world->toString()<<std::endl;
 
 	// Printing world after some turns
-	std::cout << std::endl << "WORLD AFTER SOME TURNS" << std::endl;
+	std::cout << std::endl << "WORLD AFTER SOME TURNS";
 	for(int i = 0; i<6; i++) world->makeTurn();
 	std::cout<<world->toString()<<std::endl;
 	
@@ -38,7 +45,7 @@ int main()
 			std::cout << "Birth: " << anc.birthTurn << ", Death: " << anc.deathTurn << std::endl;
 
 	// Testing copy constructor
-	std::cout << std::endl << "TESTING COPY CONSTRUCTOR" << std::endl;
+	std::cout << std::endl << "TESTING COPY CONSTRUCTOR";
 	for (auto org : world->getOrganisms())
 		if (org->getSign() == "D" && org->getAncestors().size() > 0) { 
 			DandelionCopyTest(*dynamic_cast<Dandelion*>(org)); 
@@ -53,18 +60,16 @@ int main()
 	// Loading saved world
 	World* newWorld = new World(6, 6);
 	newWorld->readWorld("save");
-	std::cout << std::endl << "LOADED WORLD" << std::endl;
+	std::cout << std::endl << "LOADED WORLD";
 	std::cout<<newWorld->toString()<<std::endl; 
 
 	// Checking Ancestors list of organisms
-	std::cout << std::endl << "LOADED WORLD ANCESTORS" << std::endl;
+	std::cout << std::endl << "LOADED WORLD ANCESTORS";
 	for (auto org : newWorld->getOrganisms())
 		for (auto& anc : org->getAncestors())
 			std::cout << "Birth: " << anc.birthTurn << ", Death: " << anc.deathTurn << std::endl;
 
 	delete newWorld;
-	// Run simulation of world
-	// newWorld->run();
 
 	return EXIT_SUCCESS;
 }
