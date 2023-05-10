@@ -16,18 +16,10 @@ Organism::~Organism() {
 	}
 };
 
-void Organism::operator=(const Organism& organism) {
-	power = organism.power;
-	initiative = organism.initiative;
-	position = organism.position;
-	liveLength = organism.liveLength;
-	powerToReproduce = organism.powerToReproduce;
-}
-
 Organism::Organism(Organism const& organism)
 : Organism(organism.position, organism.power, organism.initiative, organism.liveLength, organism.powerToReproduce, organism.sign) {
 	// cout for testing copy constructor in LivingWorld
-	std::cout << std::endl <<  "COPYING ORGANISM: " << organism.sign << ", " << organism.position << std::endl;
+	std::cout << std::endl <<  "COPYING ORGANISM: " << "{" << organism.sign << ", " << organism.position << "}" << std::endl;
 	for (auto& anc : organism.ancestors)
 		std::cout << "Birth: " << anc.birthTurn << ", Death: " << anc.deathTurn << std::endl;
 	std::cout << std::endl;

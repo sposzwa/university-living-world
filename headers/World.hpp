@@ -13,7 +13,7 @@ private:
 	int worldX;
 	int worldY;
 	int turn = 0;
-	const char separator = '_';
+	const char separator = '.';
 	std::vector<Organism*> organisms;
 	std::vector<Organism*> queuedToAdd;
 	bool isPositionOnWorld(Position pos);

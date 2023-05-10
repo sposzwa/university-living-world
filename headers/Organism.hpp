@@ -61,7 +61,6 @@ public:
 	Organism(Position pos, int power, int initiative, int liveLength, int powerToReproduce, std::string sign);
 	Organism(Organism const& organism);
 	virtual ~Organism();
-	virtual void operator=(Organism const& organism);
 		
 	// Basic object functionality
 	std::string toString();

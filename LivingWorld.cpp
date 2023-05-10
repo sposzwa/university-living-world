@@ -16,8 +16,7 @@ void DandelionCopyTest(Dandelion dan) {
 		std::cout << "Birth: " << anc.birthTurn << ", Death: " << anc.deathTurn << std::endl;
 }
 
-int main()
-{
+int main() {
 	// Random generator initialization
 	srand((unsigned int)time(NULL));
 	World* world = new World(8, 8);
