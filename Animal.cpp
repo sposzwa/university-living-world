@@ -10,7 +10,9 @@ Animal::Animal(Position pos, int power, int initiative, int liveLength, int powe
 : Organism::Organism(pos, power, initiative, liveLength, powerToReproduce, sign), lastPosition(pos) {}
 
 Animal::Animal(Animal const& animal)
-: Organism(animal) {};
+: Organism(animal) {
+	lastPosition = animal.lastPosition;
+};
 
 Animal::~Animal() {};
 
