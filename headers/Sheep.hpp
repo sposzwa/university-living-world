@@ -2,6 +2,13 @@
 #include "Animal.hpp"
 
 class Sheep : public Animal{
+protected:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& ar, const unsigned int version)
+    {
+        ar& boost::serialization::base_object<Animal>(*this);
+    }
 public: 
     // Constructors & Destructors
     Sheep();

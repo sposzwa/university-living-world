@@ -5,21 +5,31 @@
 #include <iostream>
 #include <algorithm>
 #include <optional>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/serialization/vector.hpp>
 #include "Position.hpp"
 #include "IObserver.hpp"
 #include "ISubject.hpp"
-#include "ISerializer.hpp"
 
 // Ancestor data structure
 struct Ancestor{
 	int birthTurn;
 	int deathTurn;
 	ISubject* subject;
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive& ar, const unsigned int version) 
+	{
+		ar& birthTurn;
+		ar& deathTurn;
+		ar& subject;
+	}
 };
 
 // Forward declaration of World  class
 class World;
-class Organism : public IObserver, public ISubject, public ISerializer{
+class Organism : public IObserver, public ISubject{
 	protected:
 		int power;
 		int initiative;
@@ -31,6 +41,21 @@ class Organism : public IObserver, public ISubject, public ISerializer{
 		World* world = nullptr;
 		std::vector<Ancestor> ancestors;
 		std::vector<IObserver*> descendants;
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive& ar, const unsigned int version) {
+			ar& boost::serialization::base_object<IObserver>(*this);
+			ar& boost::serialization::base_object<ISubject>(*this);
+			ar& power;
+			ar& initiative;
+			ar& position;
+			ar& liveLength;
+			ar& powerToReproduce;
+			ar& sign;
+			ar& turnOfBirth;
+			ar& descendants;
+			ar& ancestors;
+		};
 
 	public:
 		// Constructors & Destructor
@@ -89,8 +114,6 @@ class Organism : public IObserver, public ISubject, public ISerializer{
 
 		// Observer methods
 		virtual void Update(ISubject* subject) override;
-
-		// Serializer methods
-		virtual void serialize(std::fstream& out);
-		virtual void deserialize(std::fstream& in);
 };
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(Organism)

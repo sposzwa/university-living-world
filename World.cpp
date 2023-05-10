@@ -115,7 +115,7 @@ void World::addOrganism(Organism* organism)
 		size_t orgSize = organisms.size();
 		if(orgSize == 0) organisms.push_back(organism);
 		else{
-			for(int i = 0; i<orgSize; i++){
+			for(size_t i = 0; i<orgSize; i++){
 				if(organisms.at(i)->getInitiative() <= organism->getInitiative()){
 					organisms.insert(organisms.begin() + i, organism);
 					return;
@@ -201,66 +201,38 @@ void World::run()
 	}while(i < 20);
 }
 
-void World::serialize(std::fstream& out)
-{
-	out.write((char*) &worldX, sizeof(int));
-	out.write((char*) &worldY, sizeof(int));
-	out.write((char*) &turn, sizeof(int));
-
-	int vecSize = organisms.size();
-	out.write((char*) &vecSize, sizeof(int));
-	for(int i = 0; i<vecSize; i++){
-		organisms.at(i) -> serialize(out); 
-	}
-}
-
-void World::deserialize(std::fstream& in)
-{
-	int result;
-	in.read((char*) &result, sizeof(int));
-	worldX = result;
-	in.read((char*) &result, sizeof(int));
-	worldY = result;	
-	in.read((char*) &result, sizeof(int));
-	turn = result;
-	
-	int vecSize;
-	in.read((char*) &vecSize, sizeof(int));
-	std::vector<Organism*> newOrganisms;
-	organisms = newOrganisms;
-	for(int i = 0; i<vecSize; i++){
-		in.read((char*) &result, sizeof(int));
-		int strSize = (int) result;
-		std::string sign;
-		sign.resize(strSize);
-		in.read((char*) sign.data(), strSize);
-		Organism* organism = nullptr;
-		if(sign == "W") organism = new Wolf();
-		if(sign == "S") organism = new Sheep();
-		if(sign == "D") organism = new Dandelion();
-		if(sign == "T") organism = new ToadStool();
-		if(sign == "G") organism = new Grass();
-		organism->deserialize(in);
-		if(organism != nullptr) addOrganism(organism);
-	}
+void World::queue(Organism* org) {
+	queuedToAdd.push_back(org);
 }
 
 void World::writeWorld(std::string fileName)
 {
-	std::fstream my_file;
-	my_file.open(fileName, std::ios::out | std::ios::binary);
-	if (my_file.is_open()) {
-		serialize(my_file);
-		my_file.close();
-	}
+	std::ofstream ofs(fileName);
+	boost::archive::text_oarchive outArchive(ofs);
+	outArchive.register_type<Wolf>();
+	outArchive.register_type<Sheep>();
+	outArchive.register_type<Dandelion>();
+	outArchive.register_type<Grass>();
+	outArchive.register_type<ToadStool>();
+	outArchive << worldX;
+	outArchive << worldY;
+	outArchive << turn;
+	outArchive << organisms;
+	outArchive << queuedToAdd;
 }
 
 void World::readWorld(std::string fileName)
 {
-	std::fstream my_file;
-	my_file.open(fileName, std::ios::in | std::ios::binary);
-	if (my_file.is_open()) {
-		deserialize(my_file);
-		my_file.close();
-	}
+	std::ifstream ifs(fileName);
+    boost::archive::text_iarchive inArchive(ifs);
+	inArchive.register_type<Wolf>();
+	inArchive.register_type<Sheep>();
+	inArchive.register_type<Dandelion>();
+	inArchive.register_type<Grass>();
+	inArchive.register_type<ToadStool>();
+	inArchive >> worldX;
+	inArchive >> worldY;
+	inArchive >> turn;
+	inArchive >> organisms;
+	inArchive >> queuedToAdd;
 }

@@ -59,13 +59,3 @@ void Plant::interact(Organism* initator)
 	initator->move(position);
 	delete this;
 }
-
-void Plant::serialize(std::fstream& out)
-{
-	Organism::serialize(out);
-}
-
-void Plant::deserialize(std::fstream& in)
-{
-	Organism::deserialize(in);
-}

@@ -10,33 +10,26 @@ Animal::Animal(Position pos, int power, int initiative, int liveLength, int powe
 : Organism::Organism(pos, power, initiative, liveLength, powerToReproduce, sign), lastPosition(pos) {}
 
 Animal::Animal(Animal const& animal)
-:Organism(animal) {
-	std::cout<<"Copying Animal object!"<<std::endl;
-}
+: Organism(animal) {};
 
-Animal::~Animal(){
-	std::cout<<"Destructing Animal object!"<<std::endl;
-}
+Animal::~Animal() {};
 
-Position Animal::getLastPosition()
-{
+Position Animal::getLastPosition(){
 	return lastPosition;
 }
 
-void Animal::setLastPosition(Position pos)
-{
+void Animal::setLastPosition(Position pos){
 	lastPosition = pos;
 }
 
-void Animal::action()
-{
-	if(getLiveLength() == 0) delete this;
+void Animal::action(){
+	if(!liveLength) delete this;
 	else{
 		liveLength--;
 		power++;
 		auto optPos = getPositionForMove();
 		if(optPos){
-			auto pos = optPos.value();
+			auto &pos = optPos.value();
 			world->isPositionFree(pos) ? move(pos) : world->getOrganismFromPosition(pos)->interact(this);	
 		}
 	}
@@ -87,24 +80,4 @@ void Animal::interact(Organism* initiator)
 		} 
 		else delete initiator;
 	}
-}
-
-void Animal::serialize(std::fstream& out)
-{
-	Organism::serialize(out);
-	int x = lastPosition.getX();
-	out.write((char*) &x, sizeof(int));
-	int y = lastPosition.getY();
-	out.write((char*) &y, sizeof(int));
-}
-
-void Animal::deserialize(std::fstream& in)
-{
-	Organism::deserialize(in);
-	int result, x, y;
-	in.read((char*) &result, sizeof(int));
-	x = (int) result;
-	in.read((char*) &result, sizeof(int));
-	y = (int) result;
-	lastPosition = Position(x, y);
 }

@@ -2,10 +2,13 @@
 #include <vector>
 #include <ctime>
 #include <iostream>
+#include <fstream>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/serialization/vector.hpp>
 #include "Organism.hpp"
-#include "ISerializer.hpp"
 
-class World : public ISerializer
+class World
 {
 private:
 	int worldX;
@@ -15,12 +18,22 @@ private:
 	std::vector<Organism*> organisms;
 	std::vector<Organism*> queuedToAdd;
 	bool isPositionOnWorld(Position pos);
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive& ar, const unsigned int version) {
+		ar& worldX;
+		ar& worldY;
+		ar& turn;
+		ar& organisms;
+		ar& queuedToAdd;
+	};
 
 public:
 	// Constructors & Destructor
 	World();
 	World(int worldX, int worldY);
 	~World();
+
 
 	// Basic object functionality
 	std::string toString();
@@ -44,13 +57,7 @@ public:
 	Organism* getOrganismFromPosition(Position pos);
 	void makeTurn();
 	void run();
-	void queue(Organism* org) {
-		queuedToAdd.push_back(org);
-	}
-
-	// Serializer interface methods
-	virtual void serialize(std::fstream& out) override;
-	virtual void deserialize(std::fstream& in) override;
+	void queue(Organism* org);
 
 	// Saving & Loading methods
 	void writeWorld(std::string fileName);

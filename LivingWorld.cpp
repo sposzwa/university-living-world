@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "headers/Position.hpp"
 #include "headers/World.hpp"
 #include "headers/Organisms.hpp"
@@ -12,11 +13,9 @@ int main()
 	World* world = new World(8, 8);
 
 	// Creating some organisms living in this worldd
-	world->addOrganism(new Wolf(Position(0, 0)));
-	world->addOrganism(new Wolf(Position(0, 3)));
-	world->addOrganism(new Wolf(Position(5, 0)));
-	world->addOrganism(new Sheep(Position(6, 6)));
-	world->addOrganism(new ToadStool(Position(3, 2)));
+	//world->addOrganism(new Wolf(Position(0, 0)));
+	//world->addOrganism(new Sheep(Position(6, 6)));
+	//world->addOrganism(new ToadStool(Position(3, 2)));
 	world->addOrganism(new Dandelion(Position(4, 2)));
 
 	// Printing out world
@@ -33,6 +32,7 @@ int main()
 		}
 		std::cout << std::endl;
 	}
+	std::cout << world->toString() << std::endl;
 
 	// Saving world to the file
 	world->writeWorld("save");
@@ -41,7 +41,7 @@ int main()
 	// Loading saved world
 	World* newWorld = new World(6, 6);
 	newWorld->readWorld("save");
-	std::cout<<newWorld->toString()<<std::endl;
+	std::cout<<newWorld->toString()<<std::endl; 
 
 	// Run simulation of world
 	// newWorld->run();
