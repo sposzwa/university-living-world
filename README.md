@@ -6,4 +6,4 @@ World consist of different organisms that can attack each other or reproduce.
 Project implements serialization for saving and loading state of simulation.
 ## Technology used 
 Project is written in C++, using basic pointers for gaining better understanding of memory managment in C++.
-Project also use (Boost)[https://www.boost.org/] library for serialization of its state.
+Project also use [Boost](https://www.boost.org/) library for serialization of its state.
